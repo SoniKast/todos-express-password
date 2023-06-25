@@ -218,11 +218,53 @@ body {
 	color: #484848;
 }
 
+
+.todo-list li.favorited {
+	color: #C18585;
+	text-decoration: underline;
+}
+
+.todo-list li .hcheckbox:checked {
+	color: #C18585;
+	text-decoration: underline;
+}
+
 .todo-list li.completed label {
 	color: #949494;
 	text-decoration: line-through;
 }
 
+.todo-list li .hcheckbox {
+	-webkit-appearance: none;
+	appearance: none;
+	position: absolute;
+	top: 4px;
+	right: 60px;
+	bottom: 0;
+	width: 40px;
+	height: 40px;
+	margin: auto 0;
+	border: none; /* Mobile Safari */
+	font-size: 30px;
+	color: #949494;
+	transition: color 0.2s ease-out;
+}
+
+.todo-list li .hcheckbox:hover,
+.todo-list li .hcheckbox:focus {
+	color: #C18585;
+}
+
+.todo-list li .hcheckbox:after {
+	content: '❤';
+	display: block;
+	height: 100%;
+	line-height: 1.1;
+}
+
+.todo-list li:hover .hcheckbox {
+	display: block;
+}
 .todo-list li .destroy {
 	display: none;
 	position: absolute;
