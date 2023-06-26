@@ -8,6 +8,31 @@
 		<link rel="stylesheet" href="/css/index.css">
 		<link rel="stylesheet" href="/css/app.css">
 	</head>
+	<script>
+	function updateFavorite(checkbox) {
+		var todoId = checkbox.dataset.todoId;
+		var favorited = checkbox.checked;
+	  
+		// Make an asynchronous request to update the favorite status
+		fetch('/todos/' + todoId + '/favorite', {
+		  method: 'PATCH',
+		  headers: {
+			'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({ favorited: favorited })
+		})
+		.then(function(response) {
+		  if (!response.ok) {
+			throw new Error('Failed to update favorite status');
+		  }
+		  // Optionally update the UI or display a success message
+		})
+		.catch(function(error) {
+		  console.error(error);
+		  // Handle the error case
+		});
+	}
+	</script>
 	<body>
 		<section class="todoapp">
 			<nav class="nav">

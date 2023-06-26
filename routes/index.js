@@ -23,30 +23,6 @@ function fetchTodos(req, res, next) {
   });
 }
 
-function updateFavorite(checkbox) {
-  var todoId = checkbox.dataset.todoId;
-  var favorited = checkbox.checked;
-
-  // Make an asynchronous request to update the favorite status
-  fetch('/todos/' + todoId + '/favorite', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ favorited: favorited })
-  })
-  .then(function(response) {
-    if (!response.ok) {
-      throw new Error('Failed to update favorite status');
-    }
-    // Optionally update the UI or display a success message
-  })
-  .catch(function(error) {
-    console.error(error);
-    // Handle the error case
-  });
-}
-
 var router = express.Router();
 
 /* GET home page. */
@@ -77,10 +53,11 @@ router.post('/', function(req, res, next) {
   if (req.body.title !== '') { return next(); }
   return res.redirect('/' + (req.body.filter || ''));
 }, function(req, res, next) {
-  db.run('INSERT INTO todos (owner_id, title, completed) VALUES (?, ?, ?)', [
+  db.run('INSERT INTO todos (owner_id, title, completed, favorited) VALUES (?, ?, ?, ?)', [
     req.user.id,
     req.body.title,
-    req.body.completed == true ? 1 : null
+    req.body.completed == true ? 1 : null,
+    req.body.favorited == true ? 1 : null
   ], function(err) {
     if (err) { return next(err); }
     return res.redirect('/' + (req.body.filter || ''));
